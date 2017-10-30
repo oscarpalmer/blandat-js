@@ -1,0 +1,18 @@
+{
+  "author": {
+    "email": "opalmer@me.com",
+    "name":  "Oscar Palmér",
+    "url":   "https://oscar.pm"
+  },
+  "description": "A collection of JavaScript goodies.",
+  "files": [],
+  "homepage": "https://github.com/oscarpalmer/blandat-js",
+  "keywords": [],
+  "license": "MIT",
+  "name": "blandat-js",
+  "repository": {
+    "type": "git",
+    "url":  "https://github.com/oscarpalmer/blandat-js.git"
+  },
+  "version": "0.1.0"
+}
