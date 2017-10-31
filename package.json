@@ -5,14 +5,27 @@
     "url":   "https://oscar.pm"
   },
   "description": "A collection of JavaScript goodies.",
-  "files": [],
+  "devDependencies": {
+    "babel-core":       "6.26.x",
+    "babel-preset-env": "1.6.x",
+    "gulp":             "3.9.x",
+    "gulp-babel":       "7.0.x",
+    "gulp-eslint":      "4.0.x",
+    "gulp-rename":      "1.2.x",
+    "gulp-uglify":      "3.0.x",
+    "pump":             "1.0.x",
+    "uglify-es":        "3.1.x"
+  },
+  "files": ["dist/smoothie.min.js"],
   "homepage": "https://github.com/oscarpalmer/blandat-js",
-  "keywords": [],
+  "keywords": [
+    "scroll"
+  ],
   "license": "MIT",
   "name": "blandat-js",
   "repository": {
     "type": "git",
     "url":  "https://github.com/oscarpalmer/blandat-js.git"
   },
-  "version": "0.1.0"
+  "version": "0.2.0"
 }
