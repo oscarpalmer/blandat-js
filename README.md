@@ -1,5 +1,7 @@
 # Blandat
 
+[![npm version](https://badge.fury.io/js/blandat-js.svg)](https://badge.fury.io/js/blandat-js)
+
 A collection of JavaScript goodies.
 
 ## Setup
