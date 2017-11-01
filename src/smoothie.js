@@ -59,7 +59,7 @@
    *  Get an element's offset value.
    */
   function getOffset (element) {
-    return element.getBoundingClientRect().top + smoothieOffset;
+    return element.getBoundingClientRect().top - smoothieOffset;
   }
 
   /**

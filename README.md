@@ -10,6 +10,10 @@ Blandat is on [npm](//www.npmjs.com/package/blandat-js) and [yarn](//yarnpkg.com
 
 ## Smoothie
 
+Smoothie is a tiny script for scrolling to elements on a page.
+
+### How-to
+
 1. Include one of the Smoothie-files in your HTML
 2. Add a `data-smoothie` attribute to an element that functions as a local link, with its value being an existing ID on the page
 3. Call `smoothie();` in your ready-code
