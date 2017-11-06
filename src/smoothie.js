@@ -3,7 +3,7 @@
   doc = win.document;
 
   let
-  smoothieActive   = false,
+  smoothieActive = false,
   smoothieCallback,
   smoothieOffset;
 
@@ -128,7 +128,7 @@
    *  Smoothie!
    *  Attached to the window so it's easy to get started.
    */
-  win.smoothie = function (options) {
+  win.smoothie = (options) => {
 
     //  No need for more than one Smoothie to be active
     if (smoothieActive) {
@@ -136,7 +136,7 @@
     }
 
     //  Set Smoothie as active
-    smoothieActive   = true;
+    smoothieActive = true;
 
     //  Save the options for later
     smoothieCallback = options ? options.callback || null : null;
