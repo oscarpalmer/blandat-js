@@ -63,7 +63,7 @@
   }
 
   /**
-   *  Event handler for alla smoothie-elements
+   *  Event handler for all smoothie elements.
    */
   function onClick (event) {
 
@@ -71,12 +71,32 @@
     event.preventDefault();
 
     const
-    pageOffset    = win.pageYOffset,
-    element       = event.target,
-    targetId      = element.getAttribute("data-smoothie"),
-    targetElement = getElement(targetId),
-    targetOffset  = getOffset(targetElement),
-    duration      = getDuration(targetOffset);
+    //  onClick-element
+    {target} = event,
+
+    //  Get the id for the target element
+    targetID = target.getAttribute("data-smoothie");
+
+    //  Scroll to the target element
+    scroll(targetID, target);
+
+  }
+
+  /**
+   *  Animate scrolling for the onClick & smoothie.to-methods.
+   */
+  function scroll (target, origin) {
+
+    const
+    //  Base offset for current state
+    page     = win.pageYOffset,
+
+    //  Target element and its offset
+    element  = target.nodeType ? target : getElement(target),
+    offset   = getOffset(element),
+
+    //  Normalised duration for animation
+    duration = getDuration(offset);
 
     let
     start = null;
@@ -96,11 +116,11 @@
       elapsed = time - start,
 
       //  Calculate the distance to travel this loop
-      distance = targetOffset * easing(elapsed / duration);
+      distance = offset * easing(elapsed / duration);
 
       //  Scroll to the calculated position:
       //  offset of window + distance
-      win.scrollTo(0, pageOffset + distance);
+      win.scrollTo(0, page + distance);
 
       if (elapsed < duration) {
 
@@ -111,12 +131,13 @@
 
         //  Finished, but let's scroll to the defined offset
         //  to prevent the odd pixels here and there
-        win.scrollTo(0, pageOffset + targetOffset);
+        win.scrollTo(0, page + offset);
 
         //  Call the user's callback when finished
         if (typeof smoothieCallback === "function") {
-          smoothieCallback.call(event, element, targetElement);
+          smoothieCallback.call(element, element, origin);
         }
+
       }
     }
 
@@ -127,6 +148,9 @@
   /**
    *  Smoothie!
    *  Attached to the window so it's easy to get started.
+   *
+   *  @param {Function} options.callback - Callback to run after scrolling
+   *  @param {Number}   options.offset   - Base offset for scrolling
    */
   win.smoothie = (options) => {
 
@@ -144,5 +168,20 @@
 
     //  Set up event listeners
     addListeners();
+  };
+
+  /**
+   *  Complimentary method for invoking scrolls manually.
+   *
+   *  @param {Element|String} target - Element or selector for element
+   */
+  win.smoothie.to = (target) => {
+
+    //  Scrolling to an actual element
+    //  or a matching selector is a-ok
+    if (target.nodeType || typeof target === "string") {
+      scroll(target, win);
+    }
+
   };
 }(this));
