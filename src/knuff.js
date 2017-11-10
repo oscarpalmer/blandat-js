@@ -9,8 +9,8 @@
 
   //  Default options for Knuff
   knuffOptions = {
-    base: win.location.protocol + "//" + win.location.host + "/",
-    link: "[data-knuff]",
+    baseUrl: win.location.protocol + "//" + win.location.host + "/",
+    selector: "[data-knuff]",
     onPop: null,
     onPush: null
   };
@@ -18,7 +18,7 @@
   let
   knuffActive = false;
 
-  //  "Polyfill" for matches-function
+  //  "Polyfill" for matches-method
 
   if (typeof elementProto.matches === "undefined") {
     elementProto.matches = elementProto.msMatchesSelector ||
@@ -28,40 +28,42 @@
   //  Functions
 
   /**
-   *  Get the correct hyperlink for a data-knuff element.
+   *  Get the correct hyperlink for a Knuff element.
    */
   function getHref (url) {
 
     //  Regular hyperlink reference so it includes the host
-    if (url.substr(0, knuffOptions.base.length) === knuffOptions.base) {
+    if (url.substr(0, knuffOptions.baseUrl.length) === knuffOptions.baseUrl) {
       return url;
     }
 
     //  But a data-knuff value might not, so let's prepend it
-    return knuffOptions.base + url;
+    return knuffOptions.baseUrl + url;
   }
 
   /**
-   *  Set the "popstate" listener for Knuff.
+   *  Set the popstate-listener for Knuff.
    */
   function popListener (event) {
 
     //  If there's a callback, Knuff will call it
     if (typeof knuffOptions.onPop === "function") {
-      knuffOptions.onPop.call(event, event.state.knuff);
+      knuffOptions.onPop.call(event, event, event.state.knuff);
     }
 
   }
 
   /**
-   *  Set the "pushstate" listener for Knuff.
+   *  Set the pushstate-listener for Knuff.
    */
   function pushListener (event) {
+
     const
+    //  Element related to the event
     {target} = event;
 
     //  New tab? Cool, that works with Knuff
-    if (target.matches(knuffOptions.link) === false ||
+    if (target.matches(knuffOptions.selector) === false ||
         event.metaKey || event.ctrlKey) {
       return true;
     }
@@ -86,7 +88,7 @@
 
     //  If there's a callback, Knuff will call it
     if (typeof knuffOptions.onPush === "function") {
-      knuffOptions.onPush.call(event, href);
+      knuffOptions.onPush.call(event, event, href);
     }
 
     return false;
@@ -114,6 +116,11 @@
   /**
    *  Knuff!
    *  Attached to the window so it's easy to get started.
+   *
+   *  @param {String}   options.baseUrl  - Base URL for Knuff
+   *  @param {String}   options.selector - Selector for Knuff elements
+   *  @param {Function} options.onPop    - Handler for popstate-events
+   *  @param {Function} options.onPush   - Handler for pushstate-events
    */
   win.knuff = (options) => {
 
@@ -126,7 +133,7 @@
     knuffActive = true;
 
     //  Set the options for later
-    setOptions(options || {});
+    setOptions(options);
 
     //  Add listeners to the window and document
     win.addEventListener("popstate", popListener);
