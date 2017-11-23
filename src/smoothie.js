@@ -12,16 +12,16 @@
    *  with the data-attribute "smoothie"
    */
   function addListeners () {
-    const
-    elements = doc.querySelectorAll("[data-smoothie]"),
-    {length} = elements;
+    Array.prototype.forEach.call(
 
-    let
-    index = 0;
+      //  Find all relevant elements
+      doc.querySelectorAll("[data-smoothie]"),
 
-    for (; index < length; index += 1) {
-      elements[index].addEventListener("click", onClick);
-    }
+      //  And add the onClick-handler
+      (element) => {
+        element.addEventListener("click", onClick);
+      }
+    );
   }
 
   /**
@@ -43,8 +43,9 @@
   function getDuration (distance) {
 
     //  Distance can be negative, but duration cannot,
-    //  so let's make it positive and return it
-    return distance < 1 ? -distance : distance;
+    //  so let's make it positive, and then return
+    //  its closest, greater (or equal) integer to avoid decimals
+    return Math.ceil(distance < 1 ? -distance : distance);
 
   }
 
@@ -184,4 +185,4 @@
     }
 
   };
-}(this));
+}(window));
